@@ -1,12 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import CardList from './CardList'
+import Card from './components/Card'
+export default class App extends Component {
+  
+  constructor(){
+    super();
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+    this.state = {
+      dataSource: null
+    }
+  }
+
+
+  componentDidMount() {
+
+    this.setState({
+      dataSource: CardList
+    })
+  }
+
+
+  render(){
+    return (
+      <View style={styles.container}>
+
+      <Card />
+      
+
+      </View>
+    )
+  }
+
+
 }
 
 const styles = StyleSheet.create({
@@ -15,5 +41,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
