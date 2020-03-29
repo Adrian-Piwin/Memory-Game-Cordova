@@ -17,7 +17,13 @@ const Card = proprs => {
 
 const styles = StyleSheet.create({
     image: {
+<<<<<<< Updated upstream
         width: 70,
+=======
+        flex: 1,
+        width: 60,
+        height: null,
+>>>>>>> Stashed changes
         resizeMode: "contain"
     },
 
@@ -33,8 +39,5 @@ const styles = StyleSheet.create({
         shadowRadius: 6.68,
     }
 });
-
-
-
 
 export default Card;
