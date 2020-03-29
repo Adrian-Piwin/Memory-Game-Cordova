@@ -17,9 +17,7 @@ const Card = proprs => {
 
 const styles = StyleSheet.create({
     image: {
-        flex: 1,
-        width: 200,
-        height: null,
+        width: 70,
         resizeMode: "contain"
     },
 
