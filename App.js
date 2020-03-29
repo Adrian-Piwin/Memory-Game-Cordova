@@ -1,39 +1,36 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import CardList from './CardList';
-import Card from './components/Card';
-import { ScreenOrientation } from 'expo';
-import WelcomPage from './WelcomePage';
-import GamePage from './GamePage';
-
-
-
-export default function App() {
-
-  const Stack = createStackNavigator();
-
-
-
+import CardList from './CardList'
+import Card from './components/Card'
+export default class App extends Component {
   
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerShown: true
-      }}>
-        <Stack.Screen
-          name="WelcomPage"
-          component={WelcomPage}
-          options={{ title: 'Welcome' }}
-          style={styles.container}
-        />
-        <Stack.Screen name="GamePage" component={GamePage} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  constructor(){
+    super();
 
+    this.state = {
+      dataSource: null
+    }
+  }
+
+
+  componentDidMount() {
+
+    this.setState({
+      dataSource: CardList
+    })
+  }
+
+
+  render(){
+    return (
+      <View style={styles.container}>
+
+      <Card />
+      
+
+      </View>
+    )
+  }
 
 
 }
