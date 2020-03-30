@@ -1,14 +1,36 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import CardList from '../CardList';
 
 
-const Card = proprs => {
-    return (
-        <View style={styles.shadow}>
-            <Image style={styles.image} source={CardList[0].imageSource} />
-        </View>
-    )
+class Card extends React.Component {
+    state = {
+        open: true
+    }
+
+    toggleImage = () => {
+        this.setState(state => ({ open: !state.open }))
+    }
+
+    render(){
+        if (this.state.open){
+            return (
+                <View style={styles.shadow}>
+                    <TouchableOpacity onPress={this.toggleImage}> 
+                        <Image style={styles.image} source={CardList[this.props.cardPos].imageSource} onPress={this.toggleImage}/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }else{
+            return (
+                <View style={styles.shadow}>
+                    <TouchableOpacity onPress={this.toggleImage}> 
+                        <Image style={styles.image} source={CardList[52].imageSource} onPress={this.toggleImage}/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }  
+    };
 }
 
 const styles = StyleSheet.create({

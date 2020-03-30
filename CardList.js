@@ -285,6 +285,11 @@ const CardList = [
         "id": 52,
         "name": "Q of spades",
         "imageSource": require("./assets/cardImgs/QS.png")
+    },
+    {
+        "id": 53,
+        "name": "back of card",
+        "imageSource": require("./assets/cardImgs/gray_back.png")
     }
     
 

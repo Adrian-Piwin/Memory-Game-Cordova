@@ -15,9 +15,6 @@ export default function App() {
 
   const Stack = createStackNavigator();
 
-
-
-  
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
@@ -33,9 +30,6 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   )
-
-
-
 }
 
 const styles = StyleSheet.create({

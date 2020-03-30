@@ -36,7 +36,10 @@ export default class GamePage extends Component {
                 }}
                 {...this.panResponder.panHandlers}
                 >
-                    <Card />
+
+                    <Card cardPos={0} />
+
+
                 </Animated.View>
             </View>
         )
@@ -52,3 +55,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
+
+
