@@ -1,41 +1,68 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, Animated, TouchableOpacity } from 'react-native';
 import CardList from '../CardList';
 
 
 class Card extends React.Component {
-    state = {
-        open: true
+
+    constructor() {
+        super();
+        this.state = {
+            isLoading: true,
+            dataSource: null,
+            randomNum: 8
+        }
     }
 
-    toggleImage = () => {
-        this.setState(state => ({ open: !state.open }))
+    componentDidMount() {
+
+        this.setState({
+            isLoading: false,
+            dataSource: CardList,
+            randomNum: Math.floor(Math.random() * (51 - 1)) + 1
+        })
     }
 
-    render(){
-        if (this.state.open){
+
+
+   
+        state = {
+            open: true
+        }
+
+        toggleImage = () => {
+            this.setState(state => ({ open: !state.open }))
+        }
+
+        render() {
+        if (this.state.open) {
             return (
-                <View style={styles.shadow}>
-                    <TouchableOpacity onPress={this.toggleImage}> 
-                        <Image style={styles.image} source={CardList[this.props.cardPos].imageSource} onPress={this.toggleImage}/>
+                <View>
+                    <TouchableOpacity onPress={this.toggleImage}>
+                        <Image style={styles.image} source={CardList[this.props.cardPos].imageSource} />
                     </TouchableOpacity>
                 </View>
             )
-        }else{
+        } else {
             return (
-                <View style={styles.shadow}>
-                    <TouchableOpacity onPress={this.toggleImage}> 
-                        <Image style={styles.image} source={CardList[52].imageSource} onPress={this.toggleImage}/>
+                <View>
+                    <TouchableOpacity onPress={this.toggleImage}>
+                        <Image style={styles.image} source={CardList[52].imageSource} onPress={this.toggleImage} />
                     </TouchableOpacity>
                 </View>
             )
-        }  
-    };
+        }
+
+    }
+
 }
 
 const styles = StyleSheet.create({
+
     image: {
-        width: 70,
+        width: 80,
+        height: 120,
+
         resizeMode: "contain"
     },
 
@@ -47,6 +74,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.36,
         shadowRadius: 6.68,
+    },
+    flipCard: {
+        backfaceVisibility: 'hidden'
+    },
+    flipCardBack: {
+        position: 'absolute',
+        top: 0
     }
 });
 

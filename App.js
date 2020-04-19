@@ -10,6 +10,12 @@ import WelcomPage from './WelcomePage';
 import GamePage from './GamePage';
 
 
+import * as firebase from 'firebase'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+
+
+
+
 
 export default function App() {
 
