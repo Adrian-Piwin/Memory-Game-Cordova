@@ -20,9 +20,6 @@ class Card extends React.Component {
         })
     }
 
-
-
-
     state = {
         open: true
     }
@@ -44,13 +41,11 @@ class Card extends React.Component {
             return (
                 <View>
                     <TouchableOpacity onPress={this.toggleImage}>
-                        <Image style={styles.image} source={CardList[52].imageSource} onPress={this.toggleImage} />
+                        <Image style={styles.image} source={CardList[52].imageSource}/>
                     </TouchableOpacity>
                 </View>
             )
         }
-
-
 
     }
 

@@ -37,7 +37,7 @@ export default class GamePage extends Component {
         // length < number of half number of the cards(card IDs),  will combine another half number of the same cards 
         while (arr.length < 9) {
             // 52 will be the maximum range of the cards, index starts at 0
-            var r = Math.floor(Math.random() * 52) + 1;
+            var r = Math.floor(Math.random() * 51);
             if (arr.indexOf(r) === -1) arr.push(r);
         }
         // 2nd copy of generated cards' ID
@@ -79,17 +79,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'column',
         flexWrap: 'wrap'
-
-    },
-    row: {
-
-
-    },
-    column: {
-
-        flexDirection: 'column'
     }
-
 });
 
 
