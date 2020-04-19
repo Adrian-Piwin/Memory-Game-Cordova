@@ -132,76 +132,16 @@ export default class GamePage extends Component {
     }
 
     render() {
-        return (
 
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(0)}>
-                    {this.renderCards(0)}
-                </TouchableOpacity>
+        const listCards = this.state.cardsArray.map((number, index) => <TouchableOpacity key={index} style={styles.shadow} onPress={() => this.toggleImage(index)}>{this.renderCards(index)}</TouchableOpacity>);
+     return (
 
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(1)}>
-                    {this.renderCards(1)}
-                </TouchableOpacity>
+         <View style={styles.container}> 
+             {listCards}
+         </View>
+     )
+ }
 
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(2)}>
-                    {this.renderCards(2)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(3)}>
-                    {this.renderCards(3)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(4)}>
-                    {this.renderCards(4)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(5)}>
-                    {this.renderCards(5)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(6)}>
-                    {this.renderCards(6)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(7)}>
-                    {this.renderCards(7)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(8)}>
-                    {this.renderCards(8)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(9)}>
-                    {this.renderCards(9)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(10)}>
-                    {this.renderCards(10)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(11)}>
-                    {this.renderCards(11)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(12)}>
-                    {this.renderCards(12)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(13)}>
-                    {this.renderCards(13)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(14)}>
-                    {this.renderCards(14)}
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.shadow} onPress={() => this.toggleImage(15)}>
-                    {this.renderCards(15)}
-                </TouchableOpacity>
-    
-            </View>
-        )
-    }
 
 }
 
