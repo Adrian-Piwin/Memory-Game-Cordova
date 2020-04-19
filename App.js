@@ -4,7 +4,6 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CardList from './CardList';
-import Card from './components/Card';
 import { ScreenOrientation } from 'expo';
 import WelcomPage from './WelcomePage';
 import GamePage from './GamePage';
