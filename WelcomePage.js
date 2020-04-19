@@ -6,25 +6,18 @@ function WelcomePage({ navigation }) {
     return (
 
         <View style={styles.layout}>
-            <Text style={styles.title}>Temporary Card Game Title and Buttons</Text>
+            <Text style={styles.title}>Memory Card Game</Text>
             <TouchableOpacity onPress={() => navigation.navigate('GamePage')} style={[styles.button]}>
                 <Text>NEW GAME</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button]}>
-                <Text>CONTINUE</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button]}>
-                <Text>SETTING</Text>
+                <Text>SETTINGS</Text>
             </TouchableOpacity>
         </View>
 
 
     )
 }
-
-
-
-
 
 const styles = StyleSheet.create({
 
