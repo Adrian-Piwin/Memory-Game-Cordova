@@ -19,6 +19,7 @@ export default class GamePage extends Component {
         }
     }
 
+    // shuffle function
     shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -31,14 +32,19 @@ export default class GamePage extends Component {
 
     componentDidMount() {
 
-        
+        // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
         var arr = [];
+        // length < number of half number of the cards(card IDs),  will combine another half number of the same cards 
         while (arr.length < 9) {
+            // 52 will be the maximum range of the cards, index starts at 0
             var r = Math.floor(Math.random() * 52) + 1;
             if (arr.indexOf(r) === -1) arr.push(r);
         }
+        // 2nd copy of generated cards' ID
         var randoms2 = arr;
+        // combine them
         var mergedArr = arr.concat(randoms2);
+        // shuffle the combined cards
         this.shuffle(mergedArr);
         this.setState({
 
@@ -51,7 +57,8 @@ export default class GamePage extends Component {
 
 
     render() {
-
+        // number will be the array items, in this case, the card id(not the index, since card ID starts at 1)
+        // index in this case will be the index of 'listCards', it starts at 0. it will be used to assign the uniqe id for each card
         const listCards = this.state.array.map((number, index) => <Card key={index} cardPos={number} />);
         return (
 

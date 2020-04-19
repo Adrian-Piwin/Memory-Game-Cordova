@@ -8,33 +8,30 @@ class Card extends React.Component {
     constructor() {
         super();
         this.state = {
-            isLoading: true,
-            dataSource: null,
-            randomNum: 8
+            isLoading: true
+
         }
     }
 
     componentDidMount() {
 
         this.setState({
-            isLoading: false,
-            dataSource: CardList,
-            randomNum: Math.floor(Math.random() * (51 - 1)) + 1
+            isLoading: false
         })
     }
 
 
 
-   
-        state = {
-            open: true
-        }
 
-        toggleImage = () => {
-            this.setState(state => ({ open: !state.open }))
-        }
+    state = {
+        open: true
+    }
 
-        render() {
+    toggleImage = () => {
+        this.setState(state => ({ open: !state.open }))
+    }
+
+    render() {
         if (this.state.open) {
             return (
                 <View>
@@ -52,6 +49,8 @@ class Card extends React.Component {
                 </View>
             )
         }
+
+
 
     }
 
