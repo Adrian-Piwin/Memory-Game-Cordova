@@ -24,7 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Expo experiences to use your camera.",
+        "NSPhotoLibraryUsageDescription": "Give Expo experiences permission to save photos"
+      }
     }
+    
   }
 }

@@ -3,7 +3,10 @@ import { StyleSheet, Text, Button, View, Image, PanResponder, Animated, Touchabl
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import CardList from './CardList'
-import { ScreenOrientation } from 'expo';
+import { ActionSheet, Root } from 'native-base';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 
 export default class GamePage extends Component {
@@ -11,6 +14,7 @@ export default class GamePage extends Component {
 
     constructor() {
         super();
+
         this.state = {
             cardsArray: [],
             cardsFlipped: [],
@@ -19,12 +23,44 @@ export default class GamePage extends Component {
             failedAttempts: 0,
             matchCount: 0,
             canInteract: true,
-
-            numOfCards: 20
+            image: null,
+            numOfCards: 20,
+            bgImage: require('./assets/bg.jpg')
         }
     }
 
+
+    getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
+
+  _pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+          let img1 = {uri:result.uri}
+        this.setState({ bgImage: img1 });
+      }
+
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+  };
+
+
     componentDidMount() {
+        this.getPermissionAsync();
 
         // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
         var arr = [];
@@ -53,6 +89,8 @@ export default class GamePage extends Component {
         setTimeout(() => {
             this.startGame();
         }, 1500);
+
+
     }
 
     // Start Game
@@ -125,6 +163,7 @@ export default class GamePage extends Component {
 
     // Render back or front of card depending on flipped array
     renderCards = (pos) => {
+        
         var isFlipped = this.state.cardsFlipped[pos];
 
         var cardValue = this.state.cardsArray[pos];
@@ -137,32 +176,41 @@ export default class GamePage extends Component {
     }
 
     render() {
-
+       let {image, bgImage} = this.state;
+  
         const listCards = this.state.cardsArray.map((number, index) => <TouchableOpacity key={index} style={styles.shadow} onPress={() => this.toggleImage(index)}>{this.renderCards(index)}</TouchableOpacity>);
         return (
 
-            <ImageBackground source={require('./assets/bg.jpg')} style={styles.backgroundImage}>
-                <View style={styles.leftField} >
-                    <TouchableOpacity style={styles.resetButton} onPress={() => this.componentDidMount()}>
-                        <Text style={styles.buttonText}>Reset</Text>
-                    </TouchableOpacity>
-                    <View>
-                    <Text style={styles.numAttempt}>Failed Attempts: {this.state.failedAttempts}</Text>
-                    <Text style={styles.numAttempt}>Matched Count: {this.state.matchCount}</Text>
-                    </View>
+
+                <ImageBackground source={bgImage} style={styles.backgroundImage}>
+                
+                    <View style={styles.leftField} >
                     
-                </View>
+                        <TouchableOpacity style={styles.resetButton} onPress={() => this.componentDidMount()}>
+                            <Text style={styles.buttonText}>Reset</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.backgroundImageButton} onPress={() => this._pickImage()}>
+                            <Text style={styles.buttonText}>Choose Background Image</Text>
+                        </TouchableOpacity>
+    
+                        <View>
+                        
+                            <Text style={styles.numAttempt}>Failed Attempts: {this.state.failedAttempts}</Text>
+                            <Text style={styles.numAttempt}>Matched Count: {this.state.matchCount}</Text>
+                        </View>
 
-                <View style={styles.container}>
-                    <View style={styles.innerContainer}>
-                    {listCards}
                     </View>
-                    
-                </View>
+
+                    <View style={styles.container}>
+                        <View style={styles.innerContainer}>
+                            {listCards}
+                        </View>
+
+                    </View>
 
 
 
-            </ImageBackground>
+                </ImageBackground>
 
         )
     }
@@ -171,48 +219,61 @@ export default class GamePage extends Component {
 }
 
 const styles = StyleSheet.create({
-    buttonText:{
+    backgroundImageButton:{
+        alignItems: 'center',
+        width: 300,
+        marginRight: 40,
+        marginLeft: 10,
+        marginTop: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor: 'rgba(52, 52, 52, 0.5)',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(52, 52, 52, 0.5)'
+    },
+    buttonText: {
         fontSize: 25,
         color: 'white',
         fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto"
 
     },
-    resetButton:{
-       
-        alignItems:'center',
+    resetButton: {
+
+        alignItems: 'center',
         width: 100,
-        marginRight:40,
-        marginLeft:40,
-        marginTop:10,
-        paddingTop:20,
-        paddingBottom:20,
-        backgroundColor:'rgba(52, 52, 52, 0.5)',
-        borderRadius:10,
+        marginRight: 40,
+        marginLeft: 10,
+        marginTop: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor: 'rgba(52, 52, 52, 0.5)',
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: 'rgba(52, 52, 52, 0.5)'
     },
-    
-    numAttempt:{
-      
+
+    numAttempt: {
+
         opacity: 0.8,
         padding: 5,
         fontSize: 20,
         margin: 10,
-        backgroundColor:'rgba(52, 52, 52, 0.5)',
+        backgroundColor: 'rgba(52, 52, 52, 0.5)',
         color: 'white',
         fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto",
     },
     leftField: {
         flex: 0.7,
-        justifyContent:'space-around'
-        
-        
-     
+        justifyContent: 'space-around'
+
+
+
     },
 
     backgroundImage: {
         flex: 1,
-       
+
 
         flexDirection: 'row',
         resizeMode: 'cover', // or 'stretch'
@@ -220,13 +281,13 @@ const styles = StyleSheet.create({
     container: {
 
         flex: 1,
- 
+
     },
-    innerContainer:{
+    innerContainer: {
         justifyContent: 'center',
         alignSelf: 'center',
-        alignItems:'flex-end',
-        flex:1,
+        alignItems: 'flex-end',
+        flex: 1,
         flexDirection: 'column',
         flexWrap: 'wrap'
     },
