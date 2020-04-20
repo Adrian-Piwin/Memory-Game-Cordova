@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image, Button } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Image, ImageBackground, Button } from 'react-native';
 import GamePage from './GamePage';
 
 function WelcomePage({ navigation }) {
     return (
-
+        <ImageBackground source={require('./assets/bg.jpg')} style={styles.backgroundImage}>
         <View style={styles.layout}>
             <Text style={styles.title}>Memory Card Game</Text>
             <TouchableOpacity onPress={() => navigation.navigate('GamePage')} style={[styles.button]}>
@@ -14,12 +14,19 @@ function WelcomePage({ navigation }) {
                 <Text>SETTINGS</Text>
             </TouchableOpacity>
         </View>
-
+        </ImageBackground>
 
     )
 }
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+       
+
+        flexDirection: 'row',
+        resizeMode: 'cover', // or 'stretch'
+    },
 
     layout: {
         flex: 1,
