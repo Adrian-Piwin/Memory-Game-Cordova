@@ -2,20 +2,33 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, ImageBackground } from 'react-native';
 GLOBAL = require('./global');
 
-function WelcomePage({ navigation }) {
-    return (
-        <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
-            <View style={styles.layout}>
-                <Text style={styles.title}>Memory Card Game</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('GamePage')} style={[styles.button]}>
-                    <Text>NEW GAME</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('SettingsPage')} style={[styles.button]}>
-                    <Text>SETTINGS</Text>
-                </TouchableOpacity>
-            </View>
-        </ImageBackground>
-    )
+export default class WelcomePage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.navigation = props.navigation;
+
+        this.state = {
+            bgImage: require('./assets/bg2.jpg')
+        }
+    }
+
+    render() {
+        return (
+            <ImageBackground source={this.state.bgImage} style={styles.backgroundImage}>
+                <View style={styles.layout}>
+                    <Text style={styles.title}>Memory Card Game</Text>
+                    <TouchableOpacity onPress={() => this.navigation.navigate('GamePage')} style={[styles.button]}>
+                        <Text>NEW GAME</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.navigation.navigate('SettingsPage')} style={[styles.button]}>
+                        <Text>SETTINGS</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+        )
+    }
+    
 }
 
 const styles = StyleSheet.create({
@@ -54,6 +67,3 @@ const styles = StyleSheet.create({
         borderRadius: 15
     }
 });
-
-
-export default WelcomePage;
