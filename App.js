@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import CardList from './CardList';
-import { ScreenOrientation } from 'expo';
-import WelcomPage from './WelcomePage';
+import WelcomePage from './WelcomePage';
 import GamePage from './GamePage';
+import SettingsPage from './SettingsPage';
 
 
 export default function App() {
@@ -19,12 +18,13 @@ export default function App() {
         headerShown: false
       }}>
         <Stack.Screen
-          name="WelcomPage"
-          component={WelcomPage}
+          name="WelcomePage"
+          component={WelcomePage}
           options={{ title: 'Welcome' }}
           style={styles.container}
         />
         <Stack.Screen name="GamePage" component={GamePage} />
+        <Stack.Screen name="SettingsPage" component={SettingsPage} />
       </Stack.Navigator>
     </NavigationContainer>
   )

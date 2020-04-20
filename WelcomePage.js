@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image, ImageBackground, Button } from 'react-native';
-import GamePage from './GamePage';
+import { TouchableOpacity, StyleSheet, Text, View, ImageBackground } from 'react-native';
+GLOBAL = require('./global');
 
 function WelcomePage({ navigation }) {
     return (
-        <ImageBackground source={require('./assets/bg.jpg')} style={styles.backgroundImage}>
-        <View style={styles.layout}>
-            <Text style={styles.title}>Memory Card Game</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('GamePage')} style={[styles.button]}>
-                <Text>NEW GAME</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button]}>
-                <Text>SETTINGS</Text>
-            </TouchableOpacity>
-        </View>
+        <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
+            <View style={styles.layout}>
+                <Text style={styles.title}>Memory Card Game</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('GamePage')} style={[styles.button]}>
+                    <Text>NEW GAME</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('SettingsPage')} style={[styles.button]}>
+                    <Text>SETTINGS</Text>
+                </TouchableOpacity>
+            </View>
         </ImageBackground>
-
     )
 }
 
 const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
-       
-
         flexDirection: 'row',
         resizeMode: 'cover', // or 'stretch'
     },
@@ -35,8 +32,10 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 30,
-        margin: 30
+        fontSize: 40,
+        margin: 30,
+        color: 'white',
+        fontWeight: 'bold'
     },
 
     button: {

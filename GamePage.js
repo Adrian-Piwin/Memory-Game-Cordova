@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, Button, View, Image, PanResponder, Animated, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import CardList from './CardList'
-import { ActionSheet, Root } from 'native-base';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
-
+import CardList from './CardList';
+GLOBAL = require('./global');
 
 export default class GamePage extends Component {
 
@@ -24,43 +19,11 @@ export default class GamePage extends Component {
             matchCount: 0,
             canInteract: true,
             image: null,
-            numOfCards: 20,
-            bgImage: require('./assets/bg.jpg')
+            numOfCards: 20
         }
     }
 
-
-    getPermissionAsync = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      }
-    }
-  };
-
-  _pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-          let img1 = {uri:result.uri}
-        this.setState({ bgImage: img1 });
-      }
-
-      console.log(result);
-    } catch (E) {
-      console.log(E);
-    }
-  };
-
-
     componentDidMount() {
-        this.getPermissionAsync();
 
         // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
         var arr = [];
@@ -140,9 +103,7 @@ export default class GamePage extends Component {
                     this.setState({ cardChosenOne: -1 })
                 }
             }
-
         }
-
     }
 
     checkForWinner = () => {
@@ -181,18 +142,13 @@ export default class GamePage extends Component {
         const listCards = this.state.cardsArray.map((number, index) => <TouchableOpacity key={index} style={styles.shadow} onPress={() => this.toggleImage(index)}>{this.renderCards(index)}</TouchableOpacity>);
         return (
 
-
-                <ImageBackground source={bgImage} style={styles.backgroundImage}>
+                <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
                 
                     <View style={styles.leftField} >
                     
                         <TouchableOpacity style={styles.resetButton} onPress={() => this.componentDidMount()}>
                             <Text style={styles.buttonText}>Reset</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backgroundImageButton} onPress={() => this._pickImage()}>
-                            <Text style={styles.buttonText}>Choose Background Image</Text>
-                        </TouchableOpacity>
-    
                         <View>
                         
                             <Text style={styles.numAttempt}>Failed Attempts: {this.state.failedAttempts}</Text>
@@ -208,14 +164,9 @@ export default class GamePage extends Component {
 
                     </View>
 
-
-
                 </ImageBackground>
-
         )
     }
-
-
 }
 
 const styles = StyleSheet.create({
@@ -236,11 +187,11 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: 'white',
         fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto"
-
     },
     resetButton: {
 
         alignItems: 'center',
+        fontSize: 20,
         width: 100,
         marginRight: 40,
         marginLeft: 10,
@@ -254,7 +205,6 @@ const styles = StyleSheet.create({
     },
 
     numAttempt: {
-
         opacity: 0.8,
         padding: 5,
         fontSize: 20,
@@ -264,24 +214,18 @@ const styles = StyleSheet.create({
         fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto",
     },
     leftField: {
-        flex: 0.7,
-        justifyContent: 'space-around'
-
-
-
+        flex: 0.4,
+        justifyContent: 'space-around',
+        marginLeft: 25
     },
 
     backgroundImage: {
         flex: 1,
-
-
         flexDirection: 'row',
         resizeMode: 'cover', // or 'stretch'
     },
     container: {
-
         flex: 1,
-
     },
     innerContainer: {
         justifyContent: 'center',
