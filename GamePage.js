@@ -1,8 +1,8 @@
 import React, { useEffect, Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, BackHandler, Alert, ImageBackground } from 'react-native';
 import 'react-native-gesture-handler';
-import CardList from '../CardList';
-GLOBAL = require('../global');
+import CardList from './CardList';
+GLOBAL = require('./global');
 
 export default class GamePage extends Component {
 
@@ -24,8 +24,13 @@ export default class GamePage extends Component {
         }
     }
 
+
+
+
+
+
+
     componentDidMount() {
-        BackHandler.addEventListener("hardwareBackPress", this.backAction);
         // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
         var arr = [];
         // length < number of half number of the cards(card IDs),  will combine another half number of the same cards 
@@ -57,9 +62,6 @@ export default class GamePage extends Component {
 
     }
 
-    componentWillUnmount() {
-        BackHandler.removeEventListener("hardwareBackPress", this.backAction);
-    }
 
 
     // Start Game
@@ -143,7 +145,7 @@ export default class GamePage extends Component {
     }
 
     backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        Alert.alert("Warning", "Progress will be lost, are you sure you want to quit?", [
             {
                 text: "Cancel",
                 onPress: () => null,
@@ -164,8 +166,8 @@ export default class GamePage extends Component {
             <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
 
                 <View style={styles.leftField} >
-                    <TouchableOpacity style={styles.button} onPress={() => this.backAction()}>
-                        <Text style={styles.buttonText}>BACK</Text>
+                    <TouchableOpacity style={styles.quitButton} onPress={() => this.backAction()}>
+                        <Text style={styles.buttonText}>QUIT</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonReset} onPress={() => this.componentDidMount()}>
                         <Text style={styles.buttonText}>RESET</Text>
@@ -247,13 +249,13 @@ const styles = StyleSheet.create({
         height: 90,
         resizeMode: "contain"
     },
-    button: {
+    quitButton: {
         margin: 10,
         shadowColor: 'rgba(0,0,0, .4)', // IOS
         shadowOffset: { height: 1, width: 1 }, // IOS
         shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
-        backgroundColor: '#fff',
+        backgroundColor: '#ED297C',
         elevation: 2, // Android
         height: 50,
         width: 100,

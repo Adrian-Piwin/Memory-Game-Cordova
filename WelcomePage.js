@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, ImageBackground } from 'react-native';
-GLOBAL = require('../global');
+GLOBAL = require('./global');
 
 export default class WelcomePage extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ export default class WelcomePage extends Component {
         this.navigation = props.navigation;
 
         this.state = {
-            bgImage: require('../assets/bg2.jpg')
+            bgImage: require('./assets/bg2.jpg')
         }
     }
 

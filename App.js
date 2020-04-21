@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WelcomePage from './AppPages/WelcomePage';
-import GamePage from './AppPages/GamePage';
-import SettingsPage from './AppPages/SettingsPage';
+import WelcomePage from './WelcomePage';
+import GamePage from './GamePage';
+import SettingsPage from './SettingsPage';
 
 
 export default function App() {

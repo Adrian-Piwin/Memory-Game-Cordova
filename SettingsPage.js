@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import InputSpinner from "react-native-input-spinner";
-GLOBAL = require('../global');
+GLOBAL = require('./global');
 
 export default class SettingsPage extends Component {
     constructor(props) {
@@ -48,7 +48,7 @@ export default class SettingsPage extends Component {
         }
     };
 
-    chooseLevel = (num) =>{
+    chooseLevel = (num) => {
         GLOBAL.numOfCards = num;
     }
 
@@ -65,34 +65,46 @@ export default class SettingsPage extends Component {
         return (
             <ImageBackground source={this.state.bgImage} style={styles.backgroundImage}>
                 <View style={styles.layout}>
-                    <InputSpinner
-                        max={28}
-                        min={4}
-                        step={2}
-                        style={styles.spinnerContainer}
-                        colorMax={"#f04048"}
-                        colorMin={"#40c5f4"}
-                        value={this.state.number}
-                        textColor={"white"}
-                        colorLeft={"white"}
-                        colorRight={"white"}
-                        buttonTextColor={"black"}
-                        inputStyle={styles.levelNum}
-                        rounded={false}
-                        showBorder={true}
-                        
-                        onChange={(num) => {this.chooseLevel(num)
-                        }}
-                    />
-                    <TouchableOpacity style={styles.button} onPress={() => this._pickImage()}>
-                        <Text style={styles.buttonText}>Choose Background Image</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.resetImage()}>
-                        <Text style={styles.buttonText}>Reset Background Image</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.navigation.navigate('WelcomePage')}>
-                        <Text style={styles.buttonText}>Back</Text>
-                    </TouchableOpacity>
+                    <View style={styles.levelGroup}>
+                        <View style={styles.levelLabel}>
+                            <Text style={styles.levelText}>No. of Cards</Text>
+                        </View>
+
+                        <InputSpinner
+                            max={28}
+                            min={4}
+                            step={2}
+                            style={styles.spinnerContainer}
+                            colorMax={"#f04048"}
+                            colorMin={"#40c5f4"}
+                            value={this.state.number}
+                            textColor={"white"}
+                            colorLeft={"white"}
+                            colorRight={"white"}
+                            buttonTextColor={"black"}
+                            inputStyle={styles.levelNum}
+                            rounded={false}
+                            showBorder={true}
+
+                            onChange={(num) => {
+                                this.chooseLevel(num)
+                            }}
+                        />
+                    </View>
+
+                    <View style={styles.optionGroup}>
+                        <TouchableOpacity style={styles.button} onPress={() => this._pickImage()}>
+                            <Text style={styles.buttonText}>Choose Background Image</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => this.resetImage()}>
+                            <Text style={styles.buttonText}>Reset Background Image</Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={styles.button} onPress={() => this.navigation.navigate('WelcomePage')}>
+                            <Text style={styles.buttonText}>Back to Main Page</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ImageBackground>
         )
@@ -100,13 +112,39 @@ export default class SettingsPage extends Component {
 }
 
 const styles = StyleSheet.create({
-    spinnerContainer:{
+    spinnerContainer: {
         margin: 10
     },
-    levelNum:{
-        
+    optionGroup: {
+        flex: 3,
+        marginBottom: 50,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    levelLabel: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 120,
+        height: 50,
+        backgroundColor: 'rgba(52, 52, 52, 0.5)',
+        borderRadius: 5,
+    },
+    levelText: {
+        fontFamily: Platform.OS === "ios" ? "DINAlternate-Bold" : "Roboto",
+        color: 'white',
+        fontSize: 18
+    },
+    levelGroup: {
+        marginTop: 60,
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+
+    },
+    levelNum: {
+
         fontSize: 20,
-        backgroundColor:'red'
+        backgroundColor: 'red'
     },
     backgroundImage: {
         flex: 1,
@@ -114,7 +152,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover', // or 'stretch'
     },
     button: {
-        
+
         margin: 10,
         shadowColor: 'rgba(0,0,0, .4)', // IOS
         shadowOffset: { height: 1, width: 1 }, // IOS
@@ -129,7 +167,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 15
     },
-    buttonText:{
+    buttonText: {
         fontFamily: Platform.OS === "ios" ? "DINAlternate-Bold" : "Roboto",
         fontSize: 18
     },
