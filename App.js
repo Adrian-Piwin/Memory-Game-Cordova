@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WelcomePage from './WelcomePage';
-import GamePage from './GamePage';
-import SettingsPage from './SettingsPage';
+import WelcomePage from './AppPages/WelcomePage';
+import GamePage from './AppPages/GamePage';
+import SettingsPage from './AppPages/SettingsPage';
 
 
 export default function App() {
@@ -20,8 +20,8 @@ export default function App() {
         <Stack.Screen
           name="WelcomePage"
           component={WelcomePage}
-          options={{ title: 'Welcome' }}
-          style={styles.container}
+          options={{ headerTitle: 'Welcome' }}
+          
         />
         <Stack.Screen name="GamePage" component={GamePage} />
         <Stack.Screen name="SettingsPage" component={SettingsPage} />

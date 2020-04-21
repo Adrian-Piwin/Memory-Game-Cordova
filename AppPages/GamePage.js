@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import React, { useEffect, Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, BackHandler, Alert, ImageBackground } from 'react-native';
 import 'react-native-gesture-handler';
-import CardList from './CardList';
-GLOBAL = require('./global');
+import CardList from '../CardList';
+GLOBAL = require('../global');
 
 export default class GamePage extends Component {
 
 
-    constructor() {
+    constructor(props) {
         super();
-
+        this.navigation = props.navigation;
         this.state = {
+
             cardsArray: [],
             cardsFlipped: [],
             cardChosenOne: -1,
@@ -19,12 +20,12 @@ export default class GamePage extends Component {
             matchCount: 0,
             canInteract: true,
             image: null,
-            numOfCards: 20
+            numOfCards: GLOBAL.numOfCards
         }
     }
 
     componentDidMount() {
-
+        BackHandler.addEventListener("hardwareBackPress", this.backAction);
         // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
         var arr = [];
         // length < number of half number of the cards(card IDs),  will combine another half number of the same cards 
@@ -55,6 +56,11 @@ export default class GamePage extends Component {
 
 
     }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+    }
+
 
     // Start Game
     startGame = () => {
@@ -110,7 +116,7 @@ export default class GamePage extends Component {
         if (this.state.matchCount >= this.state.numOfCards / 2 - 1) {
             Alert.alert(
                 "Congradulations!",
-                "You win!\nYou didn't match a pair " + this.state.failedAttempts + " times");
+                "You win!");
         }
     }
 
@@ -124,7 +130,7 @@ export default class GamePage extends Component {
 
     // Render back or front of card depending on flipped array
     renderCards = (pos) => {
-        
+
         var isFlipped = this.state.cardsFlipped[pos];
 
         var cardValue = this.state.cardsArray[pos];
@@ -136,41 +142,57 @@ export default class GamePage extends Component {
         }
     }
 
+    backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "YES", onPress: () => this.navigation.navigate('WelcomePage') }
+        ]);
+        return true;
+    };
+
+
     render() {
-       let {image, bgImage} = this.state;
-  
+        let { image, bgImage } = this.state;
+
         const listCards = this.state.cardsArray.map((number, index) => <TouchableOpacity key={index} style={styles.shadow} onPress={() => this.toggleImage(index)}>{this.renderCards(index)}</TouchableOpacity>);
         return (
 
-                <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
-                
-                    <View style={styles.leftField} >
-                    
-                        <TouchableOpacity style={styles.resetButton} onPress={() => this.componentDidMount()}>
-                            <Text style={styles.buttonText}>Reset</Text>
-                        </TouchableOpacity>
-                        <View>
-                        
-                            <Text style={styles.numAttempt}>Failed Attempts: {this.state.failedAttempts}</Text>
-                            <Text style={styles.numAttempt}>Matched Count: {this.state.matchCount}</Text>
-                        </View>
+            <ImageBackground source={GLOBAL.bgImg} style={styles.backgroundImage}>
 
+                <View style={styles.leftField} >
+                    <TouchableOpacity style={styles.button} onPress={() => this.backAction()}>
+                        <Text style={styles.buttonText}>BACK</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonReset} onPress={() => this.componentDidMount()}>
+                        <Text style={styles.buttonText}>RESET</Text>
+                    </TouchableOpacity>
+
+                    <View>
+
+                        <Text style={styles.numAttempt}>Failed Attempts: {this.state.failedAttempts}</Text>
+                        <Text style={styles.numAttempt}>Matched Count: {this.state.matchCount}</Text>
                     </View>
 
-                    <View style={styles.container}>
-                        <View style={styles.innerContainer}>
-                            {listCards}
-                        </View>
+                </View>
 
+                <View style={styles.container}>
+                    <View style={styles.innerContainer}>
+                        {listCards}
                     </View>
 
-                </ImageBackground>
+                </View>
+
+            </ImageBackground>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    backgroundImageButton:{
+    backgroundImageButton: {
         alignItems: 'center',
         width: 300,
         marginRight: 40,
@@ -185,23 +207,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 25,
-        color: 'white',
-        fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto"
-    },
-    resetButton: {
-
-        alignItems: 'center',
-        fontSize: 20,
-        width: 100,
-        marginRight: 40,
-        marginLeft: 10,
-        marginTop: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: 'rgba(52, 52, 52, 0.5)',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: 'rgba(52, 52, 52, 0.5)'
+        color: 'black',
+        fontFamily: Platform.OS === "ios" ? "DINAlternate-Bold" : "Roboto",
     },
 
     numAttempt: {
@@ -211,7 +218,7 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'rgba(52, 52, 52, 0.5)',
         color: 'white',
-        fontFamily: Platform.OS === "ios" ? "EuphemiaUCAS-Bold" : "Roboto",
+        fontFamily: Platform.OS === "ios" ? "DINAlternate-Bold" : "Roboto",
     },
     leftField: {
         flex: 0.4,
@@ -230,7 +237,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         justifyContent: 'center',
         alignSelf: 'center',
-        alignItems: 'flex-end',
         flex: 1,
         flexDirection: 'column',
         flexWrap: 'wrap'
@@ -241,7 +247,36 @@ const styles = StyleSheet.create({
         height: 90,
         resizeMode: "contain"
     },
-
+    button: {
+        margin: 10,
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 1, width: 1 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        backgroundColor: '#fff',
+        elevation: 2, // Android
+        height: 50,
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderRadius: 15
+    },
+    buttonReset: {
+        margin: 10,
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 1, width: 1 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        backgroundColor: '#fff',
+        elevation: 2, // Android
+        height: 100,
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderRadius: 60
+    },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
