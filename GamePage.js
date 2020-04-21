@@ -1,5 +1,5 @@
-import React, { useEffect, Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, BackHandler, Alert, ImageBackground } from 'react-native';
+import React, {  Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import 'react-native-gesture-handler';
 import CardList from './CardList';
 GLOBAL = require('./global');
@@ -23,12 +23,6 @@ export default class GamePage extends Component {
             numOfCards: GLOBAL.numOfCards
         }
     }
-
-
-
-
-
-
 
     componentDidMount() {
         // create 2 list of randomly generated arrays, merge them together and shuffle them at the end
@@ -57,7 +51,7 @@ export default class GamePage extends Component {
 
         setTimeout(() => {
             this.startGame();
-        }, 1500);
+        }, 2000);
 
 
     }
@@ -114,11 +108,12 @@ export default class GamePage extends Component {
         }
     }
 
+    // function when all the cards on the screen are matched
     checkForWinner = () => {
         if (this.state.matchCount >= this.state.numOfCards / 2 - 1) {
             Alert.alert(
                 "Congradulations!",
-                "You win!");
+                "You Win!");
         }
     }
 
@@ -144,7 +139,9 @@ export default class GamePage extends Component {
         }
     }
 
+    // function of quit button when pressed
     backAction = () => {
+        // display the message in a alert dialogue
         Alert.alert("Warning", "Progress will be lost, are you sure you want to quit?", [
             {
                 text: "Cancel",
@@ -156,9 +153,9 @@ export default class GamePage extends Component {
         return true;
     };
 
-
+    // render of the main game page
     render() {
-        let { image, bgImage } = this.state;
+        
 
         const listCards = this.state.cardsArray.map((number, index) => <TouchableOpacity key={index} style={styles.shadow} onPress={() => this.toggleImage(index)}>{this.renderCards(index)}</TouchableOpacity>);
         return (
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         flexDirection: 'row',
-        resizeMode: 'cover', // or 'stretch'
+        resizeMode: 'cover'
     },
     container: {
         flex: 1,

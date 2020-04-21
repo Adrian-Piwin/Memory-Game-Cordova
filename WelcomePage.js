@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         flexDirection: 'row',
-        resizeMode: 'cover', // or 'stretch'
+        resizeMode: 'cover', 
     },
 
     layout: {

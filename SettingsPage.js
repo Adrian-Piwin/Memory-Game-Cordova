@@ -18,6 +18,7 @@ export default class SettingsPage extends Component {
         }
     }
 
+    // gettting permission from the phone
     getPermissionAsync = async () => {
         if (Constants.platform.ios) {
             const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -27,7 +28,8 @@ export default class SettingsPage extends Component {
         }
     };
 
-    _pickImage = async () => {
+    // Image function for accesting to the phone photo library
+    pickImage = async () => {
         try {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -42,21 +44,24 @@ export default class SettingsPage extends Component {
                 this.updateImage();
             }
 
-            console.log(result);
+            
         } catch (E) {
             console.log(E);
         }
     };
 
+    // setting the global value of number of cards
     chooseLevel = (num) => {
         GLOBAL.numOfCards = num;
     }
 
+    // reset default background image
     resetImage = () => {
         GLOBAL.bgImg = require('./assets/bg.jpg');
         this.updateImage();
     }
 
+    // update the newly changed the image
     updateImage = () => {
         this.setState({ bgImage: GLOBAL.bgImg });
     }
@@ -71,7 +76,7 @@ export default class SettingsPage extends Component {
                         </View>
 
                         <InputSpinner
-                            max={28}
+                            max={24}
                             min={4}
                             step={2}
                             style={styles.spinnerContainer}
@@ -93,7 +98,7 @@ export default class SettingsPage extends Component {
                     </View>
 
                     <View style={styles.optionGroup}>
-                        <TouchableOpacity style={styles.button} onPress={() => this._pickImage()}>
+                        <TouchableOpacity style={styles.button} onPress={() => this.pickImage()}>
                             <Text style={styles.buttonText}>Choose Background Image</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.resetImage()}>
